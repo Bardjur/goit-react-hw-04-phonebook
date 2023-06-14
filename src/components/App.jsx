@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { nanoid } from 'nanoid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,15 +8,19 @@ import ContactList from "./ContactList";
 import css from './App.module.css';
 
 export default function App() {
-  const contactsLS = useMemo(() => { JSON.parse(localStorage.getItem("contacts")) || [] }, [localStorage.getItem("contacts")]);
+  const isFirstRender = useRef(true);
+  const contactsLS = JSON.parse(localStorage.getItem("contacts")) || [];
   const [contacts, setContacts] = useState(contactsLS);
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    if (contactsLS !== contacts) {
-      localStorage.setItem("contacts", JSON.stringify(contacts));
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
     }
-  }, [contacts, contactsLS]);
+
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
 
   const isIncludeContact = str => {
     str = str.toLowerCase();
