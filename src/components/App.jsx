@@ -13,11 +13,11 @@ export default function App() {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    if (contactsLS !== contacts) {
-      localStorage.setItem("contacts", JSON.stringify(contacts));
-      console.log('update');
+    if (contactsLS === contacts) {
+      return
     }
-  }, [contacts, contactsLS]);
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
 
   const isIncludeContact = str => {
     str = str.toLowerCase();
