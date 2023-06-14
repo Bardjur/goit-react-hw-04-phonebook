@@ -17,7 +17,7 @@ export default function App() {
       localStorage.setItem("contacts", JSON.stringify(contacts));
       console.log('update');
     }
-  }, [contacts]);
+  }, [contacts, contactsLS]);
 
   const isIncludeContact = str => {
     str = str.toLowerCase();
