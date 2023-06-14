@@ -8,16 +8,15 @@ import ContactList from "./ContactList";
 import css from './App.module.css';
 
 export default function App() {
-  const contactsLS = JSON.parse(localStorage.getItem("contacts")) || [];
+  const contactsLS = useMemo(() => { JSON.parse(localStorage.getItem("contacts")) || [] }, [localStorage.getItem("contacts")]);
   const [contacts, setContacts] = useState(contactsLS);
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    if (contactsLS === contacts) {
-      return
+    if (contactsLS !== contacts) {
+      localStorage.setItem("contacts", JSON.stringify(contacts));
     }
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
+  }, [contacts, contactsLS]);
 
   const isIncludeContact = str => {
     str = str.toLowerCase();
