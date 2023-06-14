@@ -9,7 +9,7 @@ export default function Filter({ onChange }) {
     setFilter(e.target.value);
     onChange(e.target.value);
    }
-  
+
   return (
     <label className={css['input-wrap']}>
       <p>Find contacts by name</p>
